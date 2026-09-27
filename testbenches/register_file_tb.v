@@ -20,8 +20,7 @@ wire [31:0] outP2;
 
 //32-bit register file outputs
 
-regFile dev (.clock(clock), .writeE(writeE), .regSel1(regSel1), .regSel2(regSel2), 
-.regOut(regOut), .inP(inP), .outP1(outP1), .outP2(outP2));
+regFile dev (.clock(clock), .writeE(writeE), .regSel1(regSel1), .regSel2(regSel2), .regOut(regOut), .inP(inP), .outP1(outP1), .outP2(outP2));
 
 //creates the module from regfile, and named dev for device
 
@@ -36,7 +35,7 @@ initial begin
 
     clock = 0;
 
-//dumpfile names the waveform recoregOuting file, dumpvars describes to recoregOut everything in this module (0), register_file_tb is the over-arching module
+//dumpfile names the waveform recording file, dumpvars describes to record everything in this module (0), register_file_tb is the over-arching module
 
 //clock is set to 0
 

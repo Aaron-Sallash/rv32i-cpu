@@ -1,6 +1,6 @@
 // Description: 32-bit Arithmetic Logic Unit for rv32i Processor
 
-module alu (input wire[31:0] bWireA, input wire[31:0] bWireB, 
+module alu (input wire[31:0] WireA, input wire[31:0] WireB, 
 input wire[3:0] aluControl, output reg [31:0] outP, output wire zero);
 
 //first two inputs create 32-bit wide binary wires
@@ -10,7 +10,7 @@ input wire[3:0] aluControl, output reg [31:0] outP, output wire zero);
 
 //Zero FLag Generation (BEQ instruction)
 
-assign zero = (result == 32'b0);
+assign zero = (outP == 32'b0);
 //actually checks the current 32-bit result
 
 //Math and Logic Selector (Combinational Block)
@@ -21,14 +21,16 @@ always @(*) begin
     case (aluControl)
         //checks the aluControl to see which operation to run
         
-        4'b0000: outP = a + b;
-        4'b0001: outP = a - b;
-        4'b0010: outP = a & b;
-        4'b0011: outP = a | b;
-        4'b0100: outP = a ^ b;
+        4'b0000: outP = WireA + WireB;
+        4'b0001: outP = WireA - WireB;
+        4'b0010: outP = WireA & WireB;
+        4'b0011: outP = WireA | WireB;
+        4'b0100: outP = WireA ^ WireB;
         default: outP = 32'b0;
         //outputs 0 if aluControl is unexpected binary
     
     endcase
 
 end
+
+endmodule
