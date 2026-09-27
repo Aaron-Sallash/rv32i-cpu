@@ -6,102 +6,102 @@
 
 module register_file_tb;
 
-reg clk;
-reg WrEn;
-reg [4:0] r1;
-reg [4:0] r2;
-reg [4:0] rd;
-reg [31:0] wd;
+reg clock;
+reg writeE;
+reg [4:0] regSel1;
+reg [4:0] regSel2;
+reg [4:0] regOut;
+reg [31:0] inP;
 
-//instantiates the clock signal, the control unit WrEn, two 5-bit addresses to read at any register, 5-bit address that decides what register a write goes to, and the 32 bit value to be saved
+//instantiates the clock signal, the control unit writeE, two 5-bit addresses to read at any register, 5-bit address that decides what register a write goes to, and the 32 bit value to be saved
 
-wire [31:0] rd1;
-wire [31:0] rd2;
+wire [31:0] outP1;
+wire [31:0] outP2;
 
 //32-bit register file outputs
 
-regFile dev (.clk(clk), .WrEn(WrEn), .r1(r1), .r2(r2), 
-.rd(rd), .wd(wd), .rd1(rd1), .rd2(rd2));
+regFile dev (.clock(clock), .writeE(writeE), .regSel1(regSel1), .regSel2(regSel2), 
+.regOut(regOut), .inP(inP), .outP1(outP1), .outP2(outP2));
 
 //creates the module from regfile, and named dev for device
 
 //names all port connections from the module, .portname(variable in tb)
 
-always #5 clk = ~clk;
-//this generates the clock; every 5 nanoseconds the clk is set to opposite of what it is; 10ns period--100MHz speed
+always #5 clock = ~clock;
+//this generates the clock; every 5 nanoseconds the clock is set to opposite of what it is; 10ns period--100MHz speed
 
 initial begin
     $dumpfile("regfile_test.vcd");
     $dumpvars(0, register_file_tb);
 
-    clk = 0;
+    clock = 0;
 
-//dumpfile names the waveform recording file, dumpvars describes to record everything in this module (0), register_file_tb is the over-arching module
+//dumpfile names the waveform recoregOuting file, dumpvars describes to recoregOut everything in this module (0), register_file_tb is the over-arching module
 
-//clk is set to 0
+//clock is set to 0
 
 //Test 1: x0 must be read as 0
 
-WrEn = 0; r1 = 0; r2 = 0;
+writeE = 0; regSel1 = 0; regSel2 = 0;
 #10;
 //turns write enable off, points read ports to x0(holds 0), waits for rising edge of clock
 
-$display("Test 1: x0 read: rd1 = %h (expected: 00000000)", rd1);
+$display("Test 1: x0 read: outP1 = %h (expected: 00000000)", outP1);
 
-//inserts rd1 as hexadecimal and prints
+//inserts outP1 as hexadecimal and prints
 
-if (rd1 === 32'h00000000) $display("PASS");
+if (outP1 === 32'h00000000) $display("PASS");
 else $display("FAIL");
 
-//checks if rd1 is what it should be (32 bits of 0) prints out pass if it is
+//checks if outP1 is what it should be (32 bits of 0) prints out pass if it is
 
 //Test 2: Write 42 into x5 and read it
 
-WrEn = 1; rd = 5; wd = 32'h0000002A;
+writeE = 1; regOut = 5; inP = 32'h0000002A;
 #10;
-//turns write enable on, points to x5 to write value, sets wd to 42 in hexadecimal, THEN waits exactly one clock period to give time for one edge to happen, and writes
+//turns write enable on, points to x5 to write value, sets inP to 42 in hexadecimal, THEN waits exactly one clock period to give time for one edge to happen, and writes
 
-WrEn = 0;
-r1 = 5;
+writeE = 0;
+regSel1 = 5;
 #10;
 //turns off write, points read port at x5, waits a clock period
 
-$display("Test 2: x5 read: rd1 = %h (expect 0000002A)", rd1);
+$display("Test 2: x5 read: outP1 = %h (expect 0000002A)", outP1);
 
-if (rd1 === 32'h0000002A) $display("PASS");
+if (outP1 === 32'h0000002A) $display("PASS");
 else $display("FAIL");
 
-//if rd1 is 42 in hexadecimal, pass
+//if outP1 is 42 in hexadecimal, pass
 
 //Test 3: Read two registers
 
-WrEn = 1; rd = 6; wd = 32'h11CAFE11;
+writeE = 1; regOut = 6; inP = 32'h11CAFE11;
 #10;
 //writes test value to x6 to be displayed
 
-WrEn = 0;
-r1 = 5; r2 = 6;
+writeE = 0;
+regSel1 = 5; regSel2 = 6;
 #10;
 //points read port 1 to x5 and read port 2 to x6
 
-$display("Test 3: two reads: rd1 = %h, rd2 = %h (expect 0000002A, 11CAFE11)", rd1, rd2);
+$display("Test 3: two reads: outP1 = %h, outP2 = %h (expect 0000002A, 11CAFE11)", outP1, outP2);
 
-if (rd1 === 32'h0000002A && rd2 === 32'h11CAFE11) $display ("PASS");
+if (outP1 === 32'h0000002A && outP2 === 32'h11CAFE11) $display ("PASS");
 else $display("FAIL");
 
 //Test 4: Try an illegal write
 
-WrEn = 1; rd = 0; wd = 32'h11111111;
+writeE = 1; regOut = 0; inP = 32'h11111111;
 #10;
 //tries to illegally write a new value to x0, which is currently 00000000
 
-WrEn = 0; r1 = 0;
+writeE = 0; regSel1 = 0;
 #10;
-//points r1 to read x0
+//points regSel1 to read x0
 
-$display("Test 4: x0 after illegal write: rd1 = %h (expect 00000000)", rd1);
+$display("Test 4: x0 after illegal write: outP1 = %h (expect 00000000)", outP1);
 
-if (rd1 === 32'h00000000) $display("PASS");
+if (outP1 === 32'h00000000) $display("PASS");
 else $display("FAIL");
 
 $display("______________________________________________");
