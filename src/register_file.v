@@ -34,4 +34,3 @@ regs[regOut] <= inP;
 end
 
 endmodule
-
