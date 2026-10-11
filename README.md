@@ -10,7 +10,7 @@ This project utilizes a 32-bit RISC-V processor in Verilog, progressing through 
 [x] Project initialized
 [x] ALU Created - add, sub, and, or, xor, slt; zero flag
 [x] Register File - 32 x 32-bit, verified through 4 testbench tests
-[ ] Control unit
+[x] Control unit
 [ ] Datapath assembly
 [ ] Single-cycle benchmark runs
 [ ] 3-stage pipelined variant runs
