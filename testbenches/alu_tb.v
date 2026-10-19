@@ -91,8 +91,8 @@ check (4'b0100, 32'h00BB, 32'h0111, 32'h01AA, 1'b0);
 check (4'b1111, 32'd50, 32'd25, 32'd0, 1'b1);
 //unexpected operation outputs 0
 
-if (errors == 0) $display ("All tests passed");
-else $display("%0d Test(s) failed", errors);
+if (errors == 0) $display ("All Tests Passed");
+else $display("%0d Test(s) Failed", errors);
 $finish;
 //prints if tests passed or not, and if not shows how many errors, finishes printing
 

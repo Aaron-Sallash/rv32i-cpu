@@ -8,13 +8,17 @@ This project utilizes a 32-bit RISC-V processor in Verilog, progressing through 
 
 ## Current Status
 [x] Project initialized
-[x] ALU Created - add, sub, and, or, xor, slt; zero flag
-[x] Register File - 32 x 32-bit, verified through 4 testbench tests
-[x] Control unit
+[x] ALU Created - add, sub, and, or, xor, slt; zero flag (10/10 tests)
+[x] Register File - 32 x 32-bit (4/4 tests)
+[x] Control Unit - (7/7 tests)
+[x] Program Counter + Instruction Memory - Fetch Path Verified (4/4 tests)
 [ ] Datapath assembly
 [ ] Single-cycle benchmark runs
 [ ] 3-stage pipelined variant runs
 [ ] Throughput comparison and conclusions
+
+## Test Programs
+`my_prog.hex` is in repo root: three instructions - addi x1, x0, 6 / addi x2, x0, 4 / and x3, x1, x2.
 
 ## Repository Structure
 - `src/` - Verilog source files for CPU components

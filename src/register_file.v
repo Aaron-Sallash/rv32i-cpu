@@ -24,10 +24,10 @@ assign outP2 = (regSel2 == 5'd0) ? 32'b0 : regs[regSel2];
 
 always @(posedge clock) begin
 //Runs only at the clocks rising edge (0-1)
-    
+
 if (writeE && regOut != 5'd0)
 //Checks if write enable switch is 1 from control unit, and if the register is not x0
-        
+
 regs[regOut] <= inP;
 //Since in a rising edge, <= is used to assign the register slot the wd 32-bit value from ALU or memory, <= is used to prevent sequential assigning that = would, instantly committing updates at each rising clock edge
 

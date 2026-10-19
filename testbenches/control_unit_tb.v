@@ -66,7 +66,7 @@ check(7'b0100011, 3'b010, 1'd0, 4'b0000, 1'b0);
 //does same as load check except feeds in code for store instruction
 
 if (errors == 0) $display("All Tests Passed");
-else             $display("%0d Test(s) failed", errors);
+else $display("%0d Test(s) Failed", errors);
 $finish;
 end
 
