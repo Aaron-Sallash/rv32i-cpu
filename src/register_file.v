@@ -18,6 +18,13 @@ output wire [31:0] outP1, output wire [31:0] outP2);
 reg [31:0] regs [0:31];
 //creates 32 registers each 32 bits wide
 
+integer i;
+initial begin
+for (i = 0; i < 32; i = i + 1)
+regs[i] = 32'b0;
+end
+//sets all registers hardwired to 0
+
 assign outP1 = (regSel1 == 5'd0) ? 32'b0 : regs[regSel1];
 assign outP2 = (regSel2 == 5'd0) ? 32'b0 : regs[regSel2];
 //if regSel1 or regSel2 are 5 bit decimal 0, then return 32 bits of 0s; if not, then output whatever value reg is at regSel1 or regSel2 to these wires
