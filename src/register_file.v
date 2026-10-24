@@ -1,8 +1,6 @@
 // Description: 32x32-bit Register File for rv32i Processor
 
-module regFile (input wire clock, input wire writeE, input wire [4:0] regSel1, 
-input wire [4:0] regSel2, input wire [4:0] regOut, input wire [31:0] inP, 
-output wire [31:0] outP1, output wire [31:0] outP2);
+module regFile (input wire clock, input wire writeE, input wire [4:0] regSel1, input wire [4:0] regSel2, input wire [4:0] regSel3, input wire [4:0] regOut, input wire [31:0] inP, output wire [31:0] outP1, output wire [31:0] outP2, output wire [31:0] outP3);
 
 //clock is 1-bit pulse that signals on and off as 1 and 0; new data only is written on switch from 0 to 1
 
@@ -28,6 +26,8 @@ end
 assign outP1 = (regSel1 == 5'd0) ? 32'b0 : regs[regSel1];
 assign outP2 = (regSel2 == 5'd0) ? 32'b0 : regs[regSel2];
 //if regSel1 or regSel2 are 5 bit decimal 0, then return 32 bits of 0s; if not, then output whatever value reg is at regSel1 or regSel2 to these wires
+assign outP3 = (regSel3 == 5'd0) ? 32'b0 : regs[regSel3];
+//third read port to probe x3 for testbench
 
 always @(posedge clock) begin
 //Runs only at the clocks rising edge (0-1)

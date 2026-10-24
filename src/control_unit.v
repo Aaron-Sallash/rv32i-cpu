@@ -12,13 +12,15 @@ module control_unit (input wire [6:0] instrClass, input wire [2:0] opFam, input 
 
 //regWr is 1-bit output that decides if the output instruction gets actually saved to register (1 if yes)
 
-assign regWr = (instrClass == 7'b0110011);
+assign regWr = (instrClass == 7'b0110011) || (instrClass == 7'b0010011);
+//assigns regWr to 1 for R-type and I-type alu instructions
 
 //assigns regWr to if instrClass is equal to an R-type instruction 
 
 always @(*) begin
-if (instrClass == 7'b0110011) begin
-//if instrClass is R-type, decode the operation family
+if (instrClass == 7'b0110011 || instrClass == 7'b0010011)
+begin
+//if instrClass is R-type OR I-type, decode the operation family
 
 case ({opBit, opFam})
 4'b0_000: aluControl = 4'b0000;
